@@ -1,0 +1,29 @@
+# Runtime generated files and directories
+lark-wiki-migrations/
+wiki-migration-*/
+*.json
+*.xml
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Do not commit lark-cli authentication or state
+.lark/
