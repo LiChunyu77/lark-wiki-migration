@@ -11,11 +11,15 @@
 
 ## 前置条件
 
-1. 安装 [lark-cli](https://open.larksuite.com/document/tools/home) 并登录：
+1. 安装并配置 [Lark CLI](https://github.com/larksuite/cli)：
    ```bash
-   lark-cli auth login
+   lark-cli config init
    ```
-2. 当前登录账号必须同时拥有：
+2. 完成用户授权登录：
+   ```bash
+   lark-cli auth login --domain all
+   ```
+3. 当前登录账号必须同时拥有：
    - 源知识库的「读取文档内容」权限
    - 目标知识库的「创建文档」权限
 

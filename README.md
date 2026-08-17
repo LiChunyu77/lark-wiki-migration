@@ -11,11 +11,15 @@ Available through:
 
 ## Prerequisites
 
-1. Install [lark-cli](https://open.larksuite.com/document/tools/home) and log in:
+1. [Lark CLI](https://github.com/larksuite/cli) installed and configured:
    ```bash
-   lark-cli auth login
+   lark-cli config init
    ```
-2. The logged-in account must have both:
+2. User authentication completed:
+   ```bash
+   lark-cli auth login --domain all
+   ```
+3. The logged-in account must have both:
    - **Read** permission on the source wiki space
    - **Create document** permission on the target wiki space
 
