@@ -20,7 +20,7 @@
 ## 安装
 
 ```bash
-git clone https://github.com/<your-username>/lark-wiki-migration.git
+git clone https://github.com/LiChunyu77/lark-wiki-migration.git
 cd lark-wiki-migration
 ./install.sh
 ```
