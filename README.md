@@ -1,25 +1,25 @@
-[English](README_EN.md) | 中文
+English | [中文](README.zh-CN.md)
 
 # Lark Wiki Migration
 
-一个跨 AI 产品的飞书知识库迁移工具。输入源 wiki 链接和目标 wiki 链接，自动把源知识库的全部 docx 文档原样迁移到目标位置。
+A cross-AI-product migration tool for Feishu (Lark) wiki spaces. Give it a source wiki link and a target wiki link, and it migrates all docx documents from the source space to the target, preserving the tree structure.
 
-支持通过以下方式调用：
-- **CLI**：`lark-wiki-migrate <source> <target>`
-- **Claude Code skill**：自然语言触发
-- **MCP Server**：任何支持 MCP 的 AI 产品（Codex、Workbuddy 等）
+Available through:
+- **CLI**: `lark-wiki-migrate <source> <target>`
+- **Claude Code skill**: triggered by natural language
+- **MCP Server**: any MCP-compatible AI product (Codex, Workbuddy, etc.)
 
-## 前置条件
+## Prerequisites
 
-1. 安装 [lark-cli](https://open.larksuite.com/document/tools/home) 并登录：
+1. Install [lark-cli](https://open.larksuite.com/document/tools/home) and log in:
    ```bash
    lark-cli auth login
    ```
-2. 当前登录账号必须同时拥有：
-   - 源知识库的「读取文档内容」权限
-   - 目标知识库的「创建文档」权限
+2. The logged-in account must have both:
+   - **Read** permission on the source wiki space
+   - **Create document** permission on the target wiki space
 
-## 安装
+## Installation
 
 ```bash
 git clone https://github.com/LiChunyu77/lark-wiki-migration.git
@@ -27,42 +27,42 @@ cd lark-wiki-migration
 ./install.sh
 ```
 
-`install.sh` 会：
-- 把 `lark-wiki-migrate` 命令 symlink 到 `~/.local/bin`
-- 如果检测到 `~/.claude/skills`，自动安装 Claude Code skill
+`install.sh` will:
+- Symlink the `lark-wiki-migrate` command into `~/.local/bin`
+- Automatically install the Claude Code skill if `~/.claude/skills` is detected
 
-安装完成后，确保 `~/.local/bin` 在你的 PATH 里：
+After installation, make sure `~/.local/bin` is in your PATH:
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-## CLI 使用
+## CLI Usage
 
 ```bash
-# 迁移
+# Migrate
 lark-wiki-migrate "https://my.feishu.cn/wiki/SOURCE" "https://my.feishu.cn/wiki/TARGET"
 
-# 先预览，不真正创建
+# Preview only, create nothing
 lark-wiki-migrate "https://my.feishu.cn/wiki/SOURCE" "https://my.feishu.cn/wiki/TARGET" --dry-run
 
-# 跳过确认
+# Skip confirmation
 lark-wiki-migrate "https://my.feishu.cn/wiki/SOURCE" "https://my.feishu.cn/wiki/TARGET" --yes
 ```
 
-## Claude Code 使用
+## Claude Code Usage
 
-安装后重启 Claude Code，然后说：
+Restart Claude Code after installation, then say:
 
-> 把 https://my.feishu.cn/wiki/SOURCE 迁到 https://my.feishu.cn/wiki/TARGET
+> Migrate https://my.feishu.cn/wiki/SOURCE to https://my.feishu.cn/wiki/TARGET
 
-Claude 会自动调用 `lark-wiki-migrate` 并返回结果。
+Claude will automatically invoke `lark-wiki-migrate` and return the result.
 
-## MCP Server 使用
+## MCP Server Usage
 
-任何支持 MCP 的 AI 客户端都可以接入。
+Works with any MCP-compatible AI client.
 
-1. 配置 MCP server：
+1. Configure the MCP server:
    ```json
    {
      "mcpServers": {
@@ -74,20 +74,20 @@ Claude 会自动调用 `lark-wiki-migrate` 并返回结果。
    }
    ```
 
-2. AI 客户端会暴露一个 `migrate_feishu_wiki` 工具，接收：
-   - `source`：源 wiki URL 或 token
-   - `target`：目标 wiki URL 或 token
-   - `dry_run`：可选，只扫描不创建
+2. The client will expose a `migrate_feishu_wiki` tool that accepts:
+   - `source`: source wiki URL or token
+   - `target`: target wiki URL or token
+   - `dry_run`: optional, scan only without creating anything
 
-## 工作原理
+## How It Works
 
-- `lark-cli docs +fetch` 读取源文档 XML
-- `lark-cli docs +create --doc-format xml` 在目标 wiki 下创建原生 docx
-- 递归遍历源知识库树形结构，保持层级关系
+- `lark-cli docs +fetch` reads the source document XML
+- `lark-cli docs +create --doc-format xml` creates native docx documents under the target wiki
+- Recursively walks the source wiki tree, preserving the hierarchy
 
-## 输出
+## Output
 
-每次迁移会创建一个独立工作目录，默认在 `~/lark-wiki-migrations/`：
+Each migration creates a dedicated working directory under `~/lark-wiki-migrations/` by default:
 
 ```
 ~/lark-wiki-migrations/
@@ -97,24 +97,24 @@ Claude 会自动调用 `lark-wiki-migrate` 并返回结果。
     └── migration_state.json
 ```
 
-- `source_tree.json`：源知识库结构
-- `migration_state.json`：断点续传状态
-- `manifest.json`：本次迁移元数据
+- `source_tree.json`: source wiki structure
+- `migration_state.json`: resumable migration state
+- `manifest.json`: metadata for this migration run
 
-## 环境变量
+## Environment Variables
 
 ```bash
-export LARK_WIKI_MIGRATION_DIR=~/my-migrations   # 自定义工作目录基路径
+export LARK_WIKI_MIGRATION_DIR=~/my-migrations   # Custom working directory base path
 ```
 
-## 注意事项
+## Notes
 
-- 迁移的是 docx 文档，嵌入的电子表格、多维表格、画板等对象不会被完整迁移
-- 图片、附件通常会保留，但受限资源可能失败
-- 工具只使用本机 `lark-cli` 的登录态，不会收集、上传或存储任何凭证
-- 请确保你拥有源/目标知识库的合法权限
-- 本工具适用于你已经拥有「读取」权限但缺少「复制/导出」入口的场景，不应用于绕过明确禁止你访问的内容
-- 使用本工具需遵守飞书开放平台使用条款和所在组织的知识产权规定
+- Only docx documents are migrated; embedded spreadsheets, bitables, whiteboards, and similar objects are not fully migrated
+- Images and attachments are usually preserved, but access-restricted resources may fail
+- The tool only uses the local `lark-cli` login session; it does not collect, upload, or store any credentials
+- Make sure you have legitimate access to both the source and target wiki spaces
+- This tool is intended for scenarios where you already have read access but no copy/export entry point — do not use it to bypass content you are explicitly forbidden to access
+- Use of this tool must comply with the Feishu Open Platform terms of service and your organization's IP policies
 
 ## License
 
