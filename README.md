@@ -112,8 +112,9 @@ export LARK_WIKI_MIGRATION_DIR=~/my-migrations   # Custom working directory base
 - Only docx documents are migrated; embedded spreadsheets, bitables, whiteboards, and similar objects are not fully migrated
 - Images and attachments are usually preserved, but access-restricted resources may fail
 - The tool only uses the local `lark-cli` login session; it does not collect, upload, or store any credentials
+- The tool operates through official APIs and can only access content your account already has permission to access — it does not bypass any permission restrictions
+- Compared with manually copying/exporting documents one by one, this tool supports batch migration, preserves the wiki hierarchy, and can resume interrupted migrations
 - Make sure you have legitimate access to both the source and target wiki spaces
-- This tool is intended for scenarios where you already have read access but no copy/export entry point — do not use it to bypass content you are explicitly forbidden to access
 - Use of this tool must comply with the Feishu Open Platform terms of service and your organization's IP policies
 
 ## License
