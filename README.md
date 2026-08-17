@@ -1,3 +1,5 @@
+[English](README_EN.md) | 中文
+
 # Lark Wiki Migration
 
 一个跨 AI 产品的飞书知识库迁移工具。输入源 wiki 链接和目标 wiki 链接，自动把源知识库的全部 docx 文档原样迁移到目标位置。
