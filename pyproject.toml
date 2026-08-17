@@ -9,7 +9,7 @@ description = "Migrate Feishu/Lark wiki contents between spaces via lark-cli."
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "chunyu"}
+    {name = "chunyu li"}
 ]
 requires-python = ">=3.9"
 classifiers = [
@@ -24,7 +24,7 @@ classifiers = [
 ]
 
 [project.scripts]
-lark-wiki-migrate = "lark_wiki_migrate.cli:main"
+lark-wiki-migrate = "lark_wiki_migrate:main"
 
 [project.optional-dependencies]
 mcp = ["mcp>=1.0.0"]
